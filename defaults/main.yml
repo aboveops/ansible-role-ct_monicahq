@@ -1,0 +1,50 @@
+---
+ct_monicahq_task_prefix: "=== MONICA HQ CT ==="
+# File names
+ct_monicahq_template_env: "env.j2"
+ct_monicahq_file_env: "{{ ct_monicahq_ct_name }}.env"
+# Path settings
+ct_monicahq_path_config_base: "/etc/ct_monicahq"
+ct_monicahq_path_config_env: "{{ ct_monicahq_path_config_base }}/{{ ct_monicahq_file_env }}"
+ct_monicahq_path_base: "/srv/ct_monicahq"
+ct_monicahq_path_data: "{{ ct_monicahq_path_base }}/{{ ct_monicahq_file_env }}"
+ct_monicahq_path_ct_data: "/var/www/html/storage"
+# Network settings
+ct_monicahq_bind_addr: "127.0.0.1"
+ct_monicahq_bind_port: "8080"
+ct_monicahq_bind_ct_port: "80"
+# Container settings
+ct_monicahq_ct_name: "monicahq"
+ct_monicahq_ct_image: "monica"
+ct_monicahq_ct_version: "latest"
+ct_monicahq_ct_image_full: "{{ ct_monicahq_ct_image }}:{{ ct_monicahq_ct_version }}"
+ct_monicahq_ct_restart_policy: "always"
+ct_monicahq_ct_state: "started"
+ct_monicahq_ct_restart: "no"
+ct_monicahq_ct_pull: "no"
+ct_monicahq_ct_recreate: "no"
+ct_monicahq_ct_ports_monicahq:
+  - "{{ ct_monicahq_bind_addr }}:{{ ct_monicahq_bind_port }}:{{ ct_monicahq_bind_ct_port }}"
+ct_monicahq_ct_ports_extra: []
+ct_monicahq_ct_ports: "{{ ct_monicahq_ct_ports_monicahq + ct_monicahq_ct_ports_extra }}"
+ct_monicahq_ct_mount_data:
+  - "{{ ct_monicahq_path_data }}:{{ ct_monicahq_path_ct_data }}"
+ct_monicahq_ct_mount_custom: []
+ct_monicahq_ct_mounts: "{{ ct_monicahq_ct_mount_data + ct_monicahq_ct_mount_custom }}"
+# Environment variables
+ct_monicahq_env_app_env: "production"
+# ct_monicahq_env_app_key: ""
+# ct_monicahq_env_hash_salt: ""
+ct_monicahq_env_app_url: "http://127.0.0.1:8080"
+ct_monicahq_env_db_connection: "mysql"
+# ct_monicahq_env_db_host: "mysql-host"
+ct_monicahq_env_db_port: "3306"
+# ct_monicahq_env_db_database: "monicahq_db_name"
+# ct_monicahq_env_db_username" "monicahq_db_user"
+# ct_monicahq_env_db_password: "monicahq_db_pass"
+ct_monicahq_env_db_prefix: ""
+ct_monicahq_env_db_use_utf8mb4: "true"
+ct_monicahq_env_default_max_upload_size: "10240"
+ct_monicahq_env_default_max_storage_size: "512"
+ct_monicahq_env_extra: {}
+...

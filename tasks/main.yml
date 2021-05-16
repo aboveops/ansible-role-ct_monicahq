@@ -1,0 +1,30 @@
+---
+- name: "{{ ct_monicahq_task_prefix }} Create config and data directories"
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+    recurse: true
+  loop:
+    - "{{ ct_monicahq_path_config_base }}"
+    - "{{ ct_monicahq_path_data }}"
+
+- name: "{{ ct_monicahq_task_prefix }} Create env file"
+  template:
+    src: "{{ ct_monicahq_template_env }}"
+    dest: "{{ ct_monicahq_path_config_env }}"
+    mode: '0644'
+
+- name: "{{ ct_monicahq_task_prefix }} Create container"
+  docker_container:
+    name: "{{ ct_monicahq_ct_name }}"
+    image: "{{ ct_monicahq_ct_image_full }}"
+    env_file: "{{ ct_monicahq_path_config_env }}"
+    restart_policy: "{{ ct_monicahq_ct_restart_policy }}"
+    state: "{{ ct_monicahq_ct_state }}"
+    restart: "{{ ct_monicahq_ct_restart }}"
+    pull: "{{ ct_monicahq_ct_pull }}"
+    recreate: "{{ ct_monicahq_ct_recreate }}"
+    ports: "{{ ct_monicahq_ct_ports }}"
+    volumes: "{{ ct_monicahq_ct_mounts }}"
+...
